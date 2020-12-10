@@ -7,7 +7,7 @@ const App = () => {
     const [animationState, setAnimationState] = useState<number>();
     const [animationSpeedState, setAnimationSpeedState] = useState<number>();
 
-    const [formColors, setFormColors] = useState<string>();
+    const [formColors, setFormColors] = useState<string>('');
     const [formAnimation, setFormAnimation] = useState<Animation>(Animation.Static);
     const [formAnimationSpeed, setFormAnimationSpeed] = useState<number>(1);
 
@@ -76,15 +76,17 @@ const App = () => {
 
         return (
             <table style={{margin: '0 auto'}}>
-                {colorsState.map(c => (
-                    <tr key={c}  style={{border: `1px solid #${c}`}}>
-                        <td style={{backgroundColor: `#${c}`, width: '25px'}}>
-                            {' '}
-                        </td>
-                        <td>
-                            {c.toUpperCase()}
-                        </td>
-                    </tr>))}
+                <tbody>
+                    {colorsState.map(c => (
+                        <tr key={c}  style={{border: `1px solid #${c}`}}>
+                            <td style={{backgroundColor: `#${c}`, width: '25px'}}>
+                                {' '}
+                            </td>
+                            <td>
+                                {c.toUpperCase()}
+                            </td>
+                        </tr>))}
+                </tbody>
             </table>
         );
     };
@@ -137,7 +139,7 @@ const App = () => {
                     <h2>Update Lights</h2>
                 </div>
                 <div className="row">
-                    <div className="col-sm" style={{borderRight: '1px solid black'}}>
+                    <div className="col-sm-4" style={{borderRight: '1px solid black'}}>
                         <h5>Presets</h5>
                         <button
                             type="button"
@@ -209,7 +211,7 @@ const App = () => {
                             Fast Rotate Multi-Color w/ White
                         </button>
                     </div>
-                    <div className="col-sm">
+                    <div className="col-sm-8">
                         <h5>Manual</h5>
                         <form>
                             <div className="form-group row">
