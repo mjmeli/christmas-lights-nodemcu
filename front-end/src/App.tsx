@@ -64,7 +64,7 @@ const App = () => {
             return;
         }
         const newState: LightsState = {
-            colors: formColors.split(','),
+            colors: formColors.split(',').map(c => c.trim()),
             animation: formAnimation,
             animationSpeed: formAnimationSpeedAsNum            
         };
@@ -224,6 +224,17 @@ const App = () => {
                                 animationSpeed: 2})}
                         >
                             Fast Rotate RGB w/ White
+                        </button>
+                        <br/>
+                        <button
+                            type="button"
+                            className="btn btn-secondary btn-large"
+                            onClick={() => handleSetState({
+                                colors: ['ff0000','ffff00','800080','00ff00','ff7d00','0000ff'],
+                                animation: Animation.Rotate,
+                                animationSpeed: 1})}
+                        >
+                            Rotate Rainbow
                         </button>
                     </div>
                     <div className="col-sm-8">
