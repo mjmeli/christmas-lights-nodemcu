@@ -9,7 +9,7 @@ const App = () => {
 
     const [formColors, setFormColors] = useState<string>('');
     const [formAnimation, setFormAnimation] = useState<Animation>(Animation.Static);
-    const [formAnimationSpeed, setFormAnimationSpeed] = useState<number>(1);
+    const [formAnimationSpeed, setFormAnimationSpeed] = useState<string>('1');
 
     const [showPersistenceControls, setShowPersistenceControls] = useState<boolean>(false);
 
@@ -21,7 +21,7 @@ const App = () => {
         // Set the form values
         setFormColors(newState.colors.join(','));
         setFormAnimation(newState.animation);
-        setFormAnimationSpeed(newState.animationSpeed);
+        setFormAnimationSpeed(newState.animationSpeed.toString());
     };
 
     const handleGetState = () => {
@@ -52,9 +52,13 @@ const App = () => {
     };
 
     const handleUpdateLights = () => {
+        const formAnimationSpeedAsNum = Number(formAnimationSpeed);
+
         if (!formColors ||
             formColors.length === 0 ||
-            formAnimationSpeed <= 0) 
+            !formAnimationSpeed ||
+            isNaN(formAnimationSpeedAsNum) ||
+            formAnimationSpeedAsNum <= 0) 
         {
             alert("Invalid input!");
             return;
@@ -62,7 +66,7 @@ const App = () => {
         const newState: LightsState = {
             colors: formColors.split(','),
             animation: formAnimation,
-            animationSpeed: formAnimationSpeed            
+            animationSpeed: formAnimationSpeedAsNum            
         };
         handleSetState(newState);
     };
@@ -171,9 +175,20 @@ const App = () => {
                             onClick={() => handleSetState({
                                 colors: ['ff0000','00ff00'],
                                 animation: Animation.Static,
-                                animationSpeed: 2})}
+                                animationSpeed: 1})}
                         >
                             Static Red and Green
+                        </button>
+                        <br/>
+                        <button
+                            type="button"
+                            className="btn btn-secondary btn-large"
+                            onClick={() => handleSetState({
+                                colors: ['ff0000','00ff00'],
+                                animation: Animation.Rotate,
+                                animationSpeed: 0.5})}
+                        >
+                            Rotate Red and Green
                         </button>
                         <br/>
                         <button
@@ -185,7 +200,7 @@ const App = () => {
                                 animationSpeed: 1
                             })}
                         >
-                            Rotate Multi-Color
+                            Rotate RGB
                         </button>
                         <br/>
                         <button
@@ -197,7 +212,7 @@ const App = () => {
                                 animationSpeed: 0.5
                             })}
                         >
-                            Slow Rotate Multi-Color
+                            Slow Rotate RBG
                         </button>
                         <br/>
                         <button
@@ -208,14 +223,14 @@ const App = () => {
                                 animation: Animation.RotateWithWhite,
                                 animationSpeed: 2})}
                         >
-                            Fast Rotate Multi-Color w/ White
+                            Fast Rotate RGB w/ White
                         </button>
                     </div>
                     <div className="col-sm-8">
                         <h5>Manual</h5>
                         <form>
                             <div className="form-group row">
-                                <label className="col-sm-2 col-form-label text-right">Colors</label>
+                                <label className="col-sm-2 col-form-label">Colors</label>
                                 <div className="col-sm-10">
                                     <input
                                         type='text'
@@ -227,7 +242,7 @@ const App = () => {
                                 </div>
                             </div>
                             <div className="form-group row">
-                                <label className="col-sm-2 col-form-label text-right">Animation</label>
+                                <label className="col-sm-2 col-form-label">Animation</label>
                                 <div className="col-sm-10">
                                     {Object.keys(Animation)
                                         .map(a => Number(a))
@@ -249,13 +264,13 @@ const App = () => {
                                 </div>
                             </div>
                             <div className="form-group row">
-                                <label className="col-sm-2 col-form-label text-right">Animation Speed</label>
+                                <label className="col-sm-2 col-form-label">Animation Speed</label>
                                 <div className="col-sm-10">
                                     <input
-                                        type='number'
+                                        type='text'
                                         className="form-control"
                                         value={formAnimationSpeed}
-                                        onChange={e => setFormAnimationSpeed(Number(e.target.value))}
+                                        onChange={e => setFormAnimationSpeed(e.target.value)}
                                     />
                                 </div>
                             </div>
