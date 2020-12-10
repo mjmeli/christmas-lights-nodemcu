@@ -6,7 +6,7 @@ const App = () => {
     const [animationSpeedState, setAnimationSpeedState] = useState();
 
     const getState = () => {
-        fetch("https://192.168.86.161/lights")
+        fetch("/api/lights")
             .then(res => res.json())
             .then(data => {
                 setColorState(data.colors.join(","));
@@ -21,7 +21,7 @@ const App = () => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         };
-        fetch('https://192.168.86.161/lights', requestOptions)
+        fetch('/api/lights', requestOptions)
             .then(response => response.json())
             .then(data => {
                 setColorState(data.colors.join(","));
@@ -31,7 +31,7 @@ const App = () => {
     };
 
     const getPersistence = () => {
-        fetch("https://192.168.86.161/persistence")
+        fetch("/api/persistence")
             .then(res => res.text())
             .then(text => console.log(text));
     };
@@ -41,7 +41,7 @@ const App = () => {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' }
         };
-        fetch('https://192.168.86.161/persistence', requestOptions)
+        fetch('/api/persistence', requestOptions)
             .then(() => console.log("file deleted!"));
     };
 
